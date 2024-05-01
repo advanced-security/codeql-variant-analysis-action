@@ -20,7 +20,7 @@ import {
   setVariantAnalysisFailed,
   setVariantAnalysisRepoInProgress,
   setVariantAnalysisRepoSucceeded,
-} from "./gh-api-client";
+} from "./mrva-api-client";
 import {
   getControllerRepoId,
   getRepos,

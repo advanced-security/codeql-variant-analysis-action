@@ -25,8 +25,11 @@ on:
       variant_analysis_id:
         description: "ID of the variant analysis"
         required: true
-      signed_auth_token:
-        description: "Signed auth token"
+      base_url:
+        description: "Base URL for the variant analysis API"
+        required: true
+      auth_token:
+        description: "Auth token for the variant analysis API"
         required: true
       action_repo_ref:
         description: "Ref of the action repository"
