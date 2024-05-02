@@ -8,7 +8,7 @@ import {
   RequestInterface,
 } from "@octokit/types";
 
-import { getSignedAuthToken } from "./inputs";
+import { getSignedAuthToken, getBaseUrl } from "./inputs";
 import { validateObject } from "./json-validation";
 
 export const userAgent = "GitHub multi-repository variant analysis action";
@@ -18,11 +18,12 @@ function getOctokit(): Octokit {
   const octokit = new throttlingOctokit({
     userAgent,
     retry,
+    baseUrl: getBaseUrl(),
     authStrategy: () => {
       return {
         hook: (request: RequestInterface, options: EndpointOptions) => {
           if (options.headers) {
-            options.headers.authorization = `RemoteAuth ${getSignedAuthToken()}`;
+            options.headers.authorization = `Bearer ${getSignedAuthToken()}`;
           }
           return request(options);
         },

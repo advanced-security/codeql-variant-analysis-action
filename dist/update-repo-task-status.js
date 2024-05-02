@@ -47728,9 +47728,6 @@ function getControllerRepoId() {
 function getVariantAnalysisId() {
   return parseInt((0, import_core.getInput)("variant_analysis_id", { required: true }));
 }
-function getSignedAuthToken() {
-  return (0, import_core.getInput)("signed_auth_token", { required: true });
-}
 function getRepos() {
   return validateObject(
     JSON.parse((0, import_core.getInput)("repositories", { required: true })),
@@ -47739,6 +47736,12 @@ function getRepos() {
 }
 function getWorkflowStatus() {
   return (0, import_core.getInput)("workflow_status", { required: true });
+}
+function getBaseUrl() {
+  return (0, import_core.getInput)("base_url", { required: true });
+}
+function getAuthToken() {
+  return (0, import_core.getInput)("auth_token", { required: true });
 }
 
 // src/gh-api-client.ts
@@ -47751,11 +47754,12 @@ function getOctokit() {
   const octokit = new throttlingOctokit({
     userAgent,
     retry: import_plugin_retry.retry,
+    baseUrl: getBaseUrl(),
     authStrategy: () => {
       return {
         hook: (request, options) => {
           if (options.headers) {
-            options.headers.authorization = `RemoteAuth ${getSignedAuthToken()}`;
+            options.headers.authorization = `Bearer ${getAuthToken()}`;
           }
           return request(options);
         }

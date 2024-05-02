@@ -53,7 +53,3 @@ export async function getInstructions(): Promise<Instructions> {
 export function getBaseUrl(): string {
   return getInput("base_url", { required: true });
 }
-
-export function getAuthToken(): string {
-  return getInput("auth_token", { required: true });
-}
